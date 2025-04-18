@@ -14,7 +14,6 @@ Plugin::Plugin(HMODULE hndl) : hModule(hndl), inited(false), rpc(playerList), re
 void Plugin::mainloop(const decltype(hookCTimerUpdate)& hook) {
     if (!inited && samp::RefChat() != nullptr && rakhook::initialize()) {
         using namespace std::placeholders;
-        samp::RefChat()->AddMessage(0x6495EDFF, "Scoreboard{FFFFFF} loaded | Author: {6495ED}AnWu{FFFFFF} | https://blast.hk");
         StringCompressor::AddReference();
         rakhook::on_receive_rpc += std::bind(&PluginRPC::onJoinClient, &rpc, _1, _2);
         rakhook::on_receive_rpc += std::bind(&PluginRPC::onQuitClient, &rpc, _1, _2);
