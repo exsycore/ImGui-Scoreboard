@@ -7,6 +7,7 @@
 #include <imgui_impl_win32.h>
 #include <format>
 #include <memory>
+
 namespace samp = sampapi::v037r1;
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -112,11 +113,18 @@ std::optional<HRESULT> PluginRender::onLost(const decltype(hookReset)& hook, IDi
 void PluginRender::onReset(const decltype(hookReset)& hook, HRESULT& returnValue, IDirect3DDevice9* pDevice, D3DPRESENT_PARAMETERS* parameters) {
 }
 
+void HideChat() {
+    if (samp::RefChat()) {
+        std::fill(std::begin(samp::RefChat()->m_entry), std::end(samp::RefChat()->m_entry), samp::CChat::ChatEntry{});
+    }
+}
+
 HRESULT __stdcall PluginRender::onWndproc(const decltype(hookWndproc)& hook, HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
         case WM_KEYDOWN: {
             if (wParam == VK_TAB && (HIWORD(lParam) & KF_REPEAT) != KF_REPEAT) {
                 GUI.mainWindow = !GUI.mainWindow;
+                ImGui::GetIO().MouseDrawCursor = false;
                 samp::RefGame()->EnableHUD(!GUI.mainWindow);
                 samp::RefGame()->EnableRadar(!GUI.mainWindow);
                 samp::RefGame()->SetCursorMode(GUI.mainWindow ? samp::CURSOR_LOCKCAM : samp::CURSOR_NONE, !GUI.mainWindow);
@@ -124,6 +132,7 @@ HRESULT __stdcall PluginRender::onWndproc(const decltype(hookWndproc)& hook, HWN
                 return 1;
             }
             else if (wParam == VK_ESCAPE && GUI.mainWindow) {
+                ImGui::GetIO().MouseDrawCursor = false;
                 GUI.mainWindow = false;
                 samp::RefGame()->EnableHUD(true);
                 samp::RefGame()->EnableRadar(true);
@@ -143,6 +152,7 @@ HRESULT __stdcall PluginRender::onWndproc(const decltype(hookWndproc)& hook, HWN
         MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, reinterpret_cast<char*>(&wParam), 1, &wch, 1);
         wParam = wch;
     }
+
     ImGui_ImplWin32_WndProcHandler(hwnd, uMsg, wParam, lParam);
     return hook.get_trampoline()(hwnd, uMsg, wParam, lParam);
 }
