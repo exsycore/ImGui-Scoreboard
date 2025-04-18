@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+extern ImFont* thaiFont;
+
 class PluginGUI {
 public:
     PluginGUI(PlayerList& _playerList);
