@@ -1,4 +1,5 @@
 #include "PlayerList.h"
+
 void PlayerList::AddPlayer(uint16_t id) {
     player_list_.insert(id);
 }
