@@ -1,7 +1,8 @@
-﻿cmake_minimum_required (VERSION 3.15)
+cmake_minimum_required (VERSION 3.15)
+set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
 
-project ("Scoreboard"
-	VERSION 1.2
+project ("ThaiUi"
+	VERSION 1.5
 )
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "D:/Games/Grand Theft Auto San Andreas Samp RP")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE "D:/Games/Grand Theft Auto San Andreas Samp RP")
@@ -50,7 +51,13 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(sampapi kthook ktsignal rakhook imgui)
 
 add_library(${PROJECT_NAME} SHARED)
-target_link_libraries(${PROJECT_NAME} PUBLIC sampapi kthook rakhook imgui imgui-win32 imgui-dx9 d3d9)
+
+target_include_directories(${PROJECT_NAME} PRIVATE
+    ${imgui_SOURCE_DIR}
+    ${imgui_SOURCE_DIR}/examples
+)
+
+target_link_libraries(${PROJECT_NAME} PUBLIC sampapi kthook rakhook imgui d3d9)
 target_sources(${PROJECT_NAME} PRIVATE
 	src/main.cpp
 	src/Plugin.cpp
@@ -58,6 +65,9 @@ target_sources(${PROJECT_NAME} PRIVATE
 	src/PluginGUI.cpp
 	src/PluginRPC.cpp
 	src/PlayerList.cpp
+
+	${imgui_SOURCE_DIR}/examples/imgui_impl_dx9.cpp
+    ${imgui_SOURCE_DIR}/examples/imgui_impl_win32.cpp
 )
 
 set_target_properties(${PROJECT_NAME}
