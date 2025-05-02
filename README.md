@@ -1,6 +1,6 @@
 ﻿# Scoreboard
 ImGui scoreboard for SA:MP 0.3.7 R1 (ไทย)
-![scoreboard](https://cdn.discordapp.com/attachments/1056228103434805278/1362796879175483452/image.png?ex=6803b2ff&is=6802617f&hm=69299e2d0f1f9be57ed9f2e83a987acb591488e2abaa4f5b1b78477b8bc7ef5c&)
+![scoreboard](https://cdn.discordapp.com/attachments/1056228103434805278/1367770230327083058/2025-04-17_20-44-16.gif?ex=6815caca&is=6814794a&hm=fc0400dd61d60643ef4f7ce84b35cd6f8eb8673e7a7c588afee8ea8b800e99fe&)
 ## สร้าง
 
     git clone https://github.com/AnWuPP/ImGui-Scoreboard.git Scoreboard
